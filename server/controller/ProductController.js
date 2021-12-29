@@ -72,26 +72,23 @@ const updateProduct = async (req, res) => {
 const updateStock = async (req, res,next) => {
     const { cart_id } = req.body;
     try {
-        const result = await req.context.models.line_items.findOne({
+        const result = await req.context.models.line_items.findAll({
             where: { lite_cart_id: cart_id },
-        });
-        const {lite_prod_id,lite_qty} = result.dataValues;
-
-        const result1 = await req.context.models.products.findOne({
-            where: { prod_id: lite_prod_id },
-        });
-        const {prod_stock} = result1.dataValues;
-
-        await req.context.models.products.update(
-        {
-           prod_stock: parseInt(prod_stock) - parseInt(lite_qty)
-        },
-        { returning: true, where: { prod_id: lite_prod_id }}
-        );
-      //res.send({ message: "data has been update" });
+        })
+        for(let i = 0; i < result.length; i++){
+             const result1 = await req.context.models.products.findOne({
+               where: { prod_id: result[i].dataValues.lite_prod_id },
+             });
+              await req.context.models.products.update(
+                {
+                  prod_stock: parseInt(result1.dataValues.prod_stock) - parseInt(result[i].dataValues.lite_qty),
+                },
+                { returning: true, where: { prod_id: parseInt(result[i].dataValues.lite_prod_id) } }
+              );
+        }
         next();
     } catch (error) {
-      res.status(404).json({ message: error.message });
+      res.status(404).json(error);
     }
   };
 

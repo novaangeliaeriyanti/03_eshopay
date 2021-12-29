@@ -12,5 +12,5 @@ router.post("/createOrder",
     IndexController.CartCtrl.updateItems,
     IndexController.CartCtrl.updateCart
     );
-
+    
 export default router;
