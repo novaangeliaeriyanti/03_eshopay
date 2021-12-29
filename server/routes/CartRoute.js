@@ -13,8 +13,8 @@ router.post("/checkout",
     )
 
 router.post("/checkout/multiple",
-    IndexController.CartCtrl.checkoutMultiple
-    // IndexController.CartCtrl.updateCart
+    IndexController.CartCtrl.checkoutMultiple,
+    IndexController.CartCtrl.updateCart
     )
 
 export default router;

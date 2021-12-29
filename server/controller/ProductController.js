@@ -72,7 +72,6 @@ const updateProduct = async (req, res) => {
 const updateStock = async (req, res,next) => {
     const { cart_id } = req.body;
     try {
-      
         const result = await req.context.models.line_items.findOne({
             where: { lite_cart_id: cart_id },
         });
@@ -85,8 +84,7 @@ const updateStock = async (req, res,next) => {
 
         await req.context.models.products.update(
         {
-            //const totalQty = lineItems.reduce((total, el) => total + el.lite_qty, 0)
-            prod_stock: parseInt(prod_stock) - parseInt(lite_qty)
+           prod_stock: parseInt(prod_stock) - parseInt(lite_qty)
         },
         { returning: true, where: { prod_id: lite_prod_id }}
         );

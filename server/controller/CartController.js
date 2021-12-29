@@ -93,15 +93,26 @@ const checkout = async (req, res, next) => {
 const checkoutMultiple = async (req, res, next) => {
   const { cart_id, product } = req.body;
   try {
-    //let result = product.map(a => a.price);
-    //   for (let j = 0; j < product.length; j++) {
-    //     result.push(product[j].price);
-    //   }
-    // const result= product[1].price;
-    return res.send(result);
+    //const result= product[1].qty;
+    for (let j = 0; j < product.length; j++) {
+      await req.context.models.line_items.update(
+        {
+          lite_price: parseFloat(product[j].price),
+          lite_qty: parseInt(product[j].qty),
+          lite_subtotal: parseInt(product[j].qty) * parseFloat(product[j].price),
+          lite_status: "CHECKOUT",
+        },
+        {
+          returning: true,
+          where: { lite_cart_id: cart_id, lite_prod_id: parseInt(product[j].prod_id) },
+        }
+      );
+    }
+    req.status = "CHECKOUT";
+    req.cartId = cart_id;
+    next();
   } catch (error) {
-    //return res.status(404).json({ message: error.message })
-    return res.status(404).send(error);
+    return res.status(404).json({ message: error.message })
   }
 };
 
