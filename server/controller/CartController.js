@@ -99,12 +99,16 @@ const checkoutMultiple = async (req, res, next) => {
         {
           lite_price: parseFloat(product[j].price),
           lite_qty: parseInt(product[j].qty),
-          lite_subtotal: parseInt(product[j].qty) * parseFloat(product[j].price),
+          lite_subtotal:
+            parseInt(product[j].qty) * parseFloat(product[j].price),
           lite_status: "CHECKOUT",
         },
         {
           returning: true,
-          where: { lite_cart_id: cart_id, lite_prod_id: parseInt(product[j].prod_id) },
+          where: {
+            lite_cart_id: cart_id,
+            lite_prod_id: parseInt(product[j].prod_id),
+          },
         }
       );
     }
@@ -112,7 +116,7 @@ const checkoutMultiple = async (req, res, next) => {
     req.cartId = cart_id;
     next();
   } catch (error) {
-    return res.status(404).json({ message: error.message })
+    return res.status(404).json({ message: error.message });
   }
 };
 
@@ -153,15 +157,14 @@ const updateCart = async (req, res) => {
         },
         { returning: true, where: { cart_id: parseInt(cart_id) } }
       );
+    } else {
+      await req.context.models.cart.update(
+        {
+          cart_status: "CLOSED",
+        },
+        { returning: true, where: { cart_id: parseInt(cart_id) } }
+      );
     }
-
-    await req.context.models.cart.update(
-      {
-        cart_status: "CLOSED",
-      },
-      { returning: true, where: { cart_id: parseInt(cart_id) } }
-    );
-
     res.send({ message: "data has been update" });
   } catch (error) {
     res.status(404).json({ message: error.message });
