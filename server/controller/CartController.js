@@ -198,6 +198,16 @@ const summaryCart = async (req, res, next) => {
   }
 };
 
+const findAllRows = async (req, res, next) => {
+  try {
+    const result = await req.context.models.cart.findAll();
+    return res.send(result);
+  } catch (error) {
+    return res.send(error);
+  }
+};
+
+
 export default {
   isCartOpen,
   saveLineItem,
@@ -206,4 +216,5 @@ export default {
   summaryCart,
   checkoutMultiple,
   updateItems,
+  findAllRows
 };

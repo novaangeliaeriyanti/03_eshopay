@@ -20,8 +20,38 @@ const findRowById = async (req, res) => {
   return res.send(result);
 };
 
+const update = async (req, res) => {
+  try {
+    const result = await req.context.models.category.update(
+      {
+        cate_name: req.body.cate_name,
+      },
+      {
+        returning: true,
+        where: { cate_id: req.params.id },
+      }
+    );
+    return res.send(result);
+  } catch (error) {
+    return res.status(404).send("no data update");
+  }
+};
+
+const deleteRow = async (req, res) => {
+  try {
+    const result = await req.context.models.category.destroy({
+      where: { cate_id: req.params.id },
+    });
+    res.send("delete" + result + "rows");
+  } catch (error) {
+    return res.status(404).send("no data found");
+  }
+};
+
 export default {
   createRow,
   findAllRows,
   findRowById,
+  update,
+  deleteRow
 };

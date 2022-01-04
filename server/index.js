@@ -7,6 +7,8 @@ import compress from 'compression';
 import cookieParser from 'cookie-parser';
 import helmet from 'helmet';
 import middleware  from "./middleware/middleware";
+import swaggerUI from "swagger-ui-express"
+import swaggerDocument from "./swagger/swagger.json"
 
 //for access models to db
 import models,{sequelize} from "./models/init-models";
@@ -47,6 +49,9 @@ app.use(config.URL_API+"/category",routes.categoryRoute);
 app.use(config.URL_API+"/product",routes.productRoute);
 app.use(config.URL_API+"/cart",routes.cartRoute);
 app.use(config.URL_API+"/order",routes.orderRoute);
+
+//swagger
+app.use("/api/docs",swaggerUI.serve,swaggerUI.setup(swaggerDocument))
 
 //use middleware to handle error from others modules
 app.use(middleware.handleError);
