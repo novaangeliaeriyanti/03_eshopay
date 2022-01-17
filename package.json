@@ -4,7 +4,13 @@
   "main": "index.js",
   "license": "MIT",
   "scripts": {
-    "start": "nodemon --exec babel-node ./server/index.js",
+    "development": "nodemon --exec babel-node ./server/index.js",
+    "clean": "rm -rf build && mkdir build",
+    "cleanw": "rmdir /S build && mkdir build",
+    "start": "node ./build/index.js",
+    "build-server": "babel -d ./build ./server -s",
+    "build": "npm run clean && npm run build-server",
+    "buildw": "npm run cleanw && npm run build-server",
     "test": "jest",
     "sql": "npx sequelize-cli db:seed:all",
     "reverse:db": "sequelize-auto -o ./schemas -d eshopay -h localhost -u postgres -p 5432 -x admin -e postgres -l esm"
@@ -36,6 +42,7 @@
     "swagger-ui-express": "^4.3.0"
   },
   "devDependencies": {
+    "@babel/cli": "^7.16.8",
     "@babel/core": "^7.12.13",
     "@babel/node": "^7.12.13",
     "@babel/plugin-transform-runtime": "^7.12.15",

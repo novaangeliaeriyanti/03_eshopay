@@ -12,5 +12,6 @@ router.post("/createOrder",
     IndexController.CartCtrl.updateItems,
     IndexController.CartCtrl.updateCart
     );
+router.get("/",IndexController.OrderCtrl.findAllRows)
     
 export default router;

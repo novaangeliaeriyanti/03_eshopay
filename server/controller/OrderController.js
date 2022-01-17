@@ -40,7 +40,17 @@ const createOrder = async (req,res,next)=>{
     }   
 }
 
+const findAllRows = async (req, res, next) => {
+    try {
+      const result = await req.context.models.orders.findAll();
+      return res.send(result);
+    } catch (error) {
+      return res.send(error);
+    }
+  };
+
 export default {
     getOrderNumber,
-    createOrder
+    createOrder,
+    findAllRows
 }

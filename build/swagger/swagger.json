@@ -1,0 +1,404 @@
+{
+    "swagger": "2.0",
+    "info": {
+        "title": "e-Shopay",
+        "description": "",
+        "version": "1.0"
+    },
+    "host": "localhost:3001",
+    "basePath": "/eshopay/api",
+    "tags": [
+        {
+            "name": "eshopay",
+            "description": "e-Shopay Code ID Academy",
+            "externalDocs": {
+                "description": "Find out more",
+                "url": "http://swagger.io"
+            }
+        }
+    ],
+    "schemes": [
+        "http",
+        "https"
+    ],
+    "paths": {
+        "/category/": {
+            "post": {
+                "tags": [
+                    "category"
+                ],
+                "summary": "Add a new category",
+                "description": "",
+                "operationId": "addCategory",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "in": "body",
+                        "name": "body",
+                        "description": "Category object create to db",
+                        "required": true
+                        
+                    }
+                ],
+                "responses": {
+                    "405": {
+                        "description": "Invalid input"
+                    }
+                }
+            },
+            "get": {
+                "tags": [
+                    "category"
+                ],
+                "summary": "Finds Category",
+                "description": "Display all category",
+                "operationId": "Find all category",
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [],
+                "responses": {
+                    "200": {
+                        "description": "successful operation",
+                        "schema": {
+                            "type": "array"
+                        }
+                    },
+                    "400": {
+                        "description": "Invalid status value"
+                    }
+                }
+            }
+        },
+        "/category/{id}": {
+            "put": {
+                "tags": [
+                    "category"
+                ],
+                "summary": "Update an existing category",
+                "description": "",
+                "operationId": "updateCategory",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "Update category",
+                        "required": true,
+                        "type": "string"
+                      },
+                    {
+                        "in": "body",
+                        "name": "body",
+                        "description": "Category object create to db",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "400": {
+                        "description": "Invalid ID supplied"
+                    },
+                    "404": {
+                        "description": "Category not found"
+                    },
+                    "405": {
+                        "description": "Validation exception"
+                    }
+                }
+            },
+            "get": {
+                "tags": [
+                    "category"
+                ],
+                "summary": "find an existing category",
+                "description": "",
+                "operationId": "updateCategory",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "Find Category ",
+                        "required": true,
+                        "type": "integer"
+                      }
+                ],
+                "responses": {
+                    "400": {
+                        "description": "Invalid Category id"
+                    },
+                    "404": {
+                        "description": "Category not found"
+                    },
+                    "405": {
+                        "description": "Validation exception"
+                    }
+                }
+            },
+            "delete": {
+                "tags": [
+                    "category"
+                ],
+                "summary": "delete an existing category",
+                "description": "",
+                "operationId": "updateCategory",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "Delete Category ",
+                        "required": true,
+                        "type": "integer"
+                      }
+                ],
+                "responses": {
+                    "400": {
+                        "description": "Invalid ID supplied"
+                    },
+                    "404": {
+                        "description": "Category not found"
+                    },
+                    "405": {
+                        "description": "Validation exception"
+                    }
+                }
+            }
+        },
+        "/product/": {
+            "get": {
+                "tags": [
+                    "product"
+                ],
+                "summary": "Finds Product",
+                "description": "Display all products",
+                "operationId": "Find all products",
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [],
+                "responses": {
+                    "200": {
+                        "description": "successful operation",
+                        "schema": {
+                            "type": "array"
+                        }
+                    },
+                    "400": {
+                        "description": "Invalid status value"
+                    }
+                }
+            }
+        },
+        "/product/images/{filename}": {
+            "get": {
+                "tags": [
+                    "product"
+                ],
+                "summary": "show image product",
+                "description": "",
+                "operationId": "showImage",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "name": "filename",
+                        "in": "path",
+                        "description": "Show Image ",
+                        "required": true
+                      }
+                ],
+                "responses": {
+                    "200":{
+                        "description": "Report generated succefully. ",
+                        "content":{
+                            
+                            "application/octet-stream":{
+                               
+                                    "content-disposition": "attachment",
+                                    "filename" : "test.jpg",
+                                    "content-type": "multipart / form-data"
+                                
+                            }
+                        }
+                        },
+                    "400": {
+                        "description": "Invalid show image"
+                    },
+                    "405": {
+                        "description": "Validation exception"
+                    }
+                }
+            }
+        },
+        "/cart/": {
+            "get": {
+                "tags": [
+                    "cart"
+                ],
+                "summary": "Finds Cart",
+                "description": "Display all cart",
+                "operationId": "Find all cart",
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [],
+                "responses": {
+                    "200": {
+                        "description": "successful operation",
+                        "schema": {
+                            "type": "array"
+                        }
+                    },
+                    "400": {
+                        "description": "Invalid status value"
+                    }
+                }
+            }
+        },
+        "/cart/addToCart": {
+            "post": {
+                "tags": [
+                    "cart"
+                ],
+                "summary": "Add a new cart",
+                "description": "",
+                "operationId": "addCart",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "in": "body",
+                        "name": "body",
+                        "description": "Cart object create to db",
+                        "required": true
+                        
+                    }
+                ],
+                "responses": {
+                    "405": {
+                        "description": "Invalid input"
+                    }
+                }
+            } 
+        },
+        "/cart/checkout": {
+            "post": {
+                "tags": [
+                    "checkout"
+                ],
+                "summary": "Checkout single product from cart",
+                "description": "",
+                "operationId": "checkout",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "in": "body",
+                        "name": "body",
+                        "description": "Checkout cart",
+                        "required": true
+                        
+                    }
+                ],
+                "responses": {
+                    "405": {
+                        "description": "Invalid input"
+                    }
+                }
+            } 
+        },
+        "/cart/checkout/multiple": {
+            "post": {
+                "tags": [
+                    "checkout"
+                ],
+                "summary": "Checkout multiple product from cart",
+                "description": "",
+                "operationId": "checkout",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "in": "body",
+                        "name": "body",
+                        "description": "Checkout cart",
+                        "required": true
+                        
+                    }
+                ],
+                "responses": {
+                    "405": {
+                        "description": "Invalid input"
+                    }
+                }
+            } 
+        },
+        "/order/createOrder": {
+            "post": {
+                "tags": [
+                    "order"
+                ],
+                "summary": "Create Order",
+                "description": "",
+                "operationId": "order",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "in": "body",
+                        "name": "body",
+                        "description": "Order",
+                        "required": true
+                        
+                    }
+                ],
+                "responses": {
+                    "405": {
+                        "description": "Invalid input"
+                    }
+                }
+            } 
+        }   
+    }
+}

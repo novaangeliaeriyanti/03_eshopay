@@ -10,21 +10,40 @@ import _products_images from  "./products_images.js";
 import _token_refresh from  "./token_refresh.js";
 import _users from  "./users.js";
 import config from '../config/config'
+import configHeroku from "../config/config-heroku.js";
 
-const sequelize = new Sequelize(
-  config.db_name,
-  config.db_username,
-  config.db_password,
-  {
-    dialect : "postgres",
-    pool : {
-      max : 5,
-      min : 0,
-      acquire :30000,
-      idle : 10000
+// const sequelize = new Sequelize(
+//   config.db_name,
+//   config.db_username,
+//   config.db_password,
+//   {
+//     dialect : "postgres",
+//     pool : {
+//       max : 5,
+//       min : 0,
+//       acquire :30000,
+//       idle : 10000
+//     }
+//   }
+// )
+
+const sequelize = new Sequelize(configHeroku.database, configHeroku.username, configHeroku.password, {
+  host: configHeroku.host,
+  dialect: configHeroku.dialect,
+  operatorsAliases: false,
+  dialectOptions: {
+    ssl: {
+      require: true, 
+      rejectUnauthorized: false 
     }
+  },
+  pool: {
+    max: configHeroku.pool.max,
+    min: configHeroku.pool.min,
+    acquire: configHeroku.pool.acquire,
+    idle: configHeroku.pool.idle
   }
-)
+});
 
 const initModels=(sequelize)=> {
   const cart = _cart.init(sequelize, DataTypes);
